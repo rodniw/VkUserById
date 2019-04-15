@@ -1,6 +1,7 @@
 package dev.rodni.ru.vktest;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,26 @@ public class MainActivity extends AppCompatActivity {
     Button searchButton;
     EditText searchText;
 
+    class VKQueryTask extends AsyncTask<URL, Void, String> {
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            String response = null;
+            try {
+                response = getResponseFromUrl(urls[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            resultText.setText(response);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +67,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 URL generatedURL = generateURL(searchText.getText().toString());
 
-                String response = null;
-                try {
-                    response = getResponseFromUrl(generatedURL);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                resultText.setText(response);
+                new VKQueryTask().execute(generatedURL);
             }
         });
     }
