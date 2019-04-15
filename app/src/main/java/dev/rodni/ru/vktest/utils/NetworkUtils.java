@@ -16,6 +16,7 @@ public class NetworkUtils {
     private static final String PARAM_USER_ID = "user_ids";
     private static final String PARAM_VERSION = "v";
     private static final String PARAM_TOKEN = "access_token";
+    private static final String ACCESS_TOKEN = "0ea2623b0ea2623b0ea2623ba20ecb93e000ea20ea2623b52138af9baebe0f01f4fb847";
 
 
 
