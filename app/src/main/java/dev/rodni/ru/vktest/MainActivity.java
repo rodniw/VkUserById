@@ -15,7 +15,12 @@ import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
+import java.io.IOException;
+import java.net.URL;
+
 import static android.widget.Toast.LENGTH_SHORT;
+import static dev.rodni.ru.vktest.utils.NetworkUtils.generateURL;
+import static dev.rodni.ru.vktest.utils.NetworkUtils.getResponseFromUrl;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +44,15 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resultText.setText("Clicked");
+                URL generatedURL = generateURL(searchText.getText().toString());
+
+                String response = null;
+                try {
+                    response = getResponseFromUrl(generatedURL);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                resultText.setText(response);
             }
         });
     }
